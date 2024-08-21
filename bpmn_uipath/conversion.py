@@ -80,7 +80,7 @@ def parse_bpmn(file_path):
     return elements
 
 
-def bpmn_to_xaml(elements):
+def bpmn_to_xaml_uipath(elements):
     """
     Input: elements (list) - List of tuples with the following format:
     [('startEvent', 'id3f98fcb5-a92a-4607-8b78-5d74a485c646', 'start', 'id46d0112d-abc2-41df-928b-5a5495c09d18'),
@@ -105,11 +105,11 @@ def bpmn_to_xaml(elements):
             )
             for click_event in click_events:
                 xaml_elements.append(
-                    f'<oa:ClickElement KeyModifiers="{{x:Null}}" AnimateMouse="False" Button="1" DoubleClick="False" Element="[item]" Focus="False" OffsetX="{click_event[1]}" OffsetY="{click_event[2]}" PostWait="00:00:00" VirtualClick="True" />'
+                    f'<uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click" KeyModifiers="None" MouseButton="Left" Version="V3" />'
                 )
             for keyboard_event in keyboard_events:
                 xaml_elements.append(
-                    f'<oa:TypeText ClickDelay="{{x:Null}}" Text="{keyboard_event[1]}" />'
+                    f'<uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into" EmptyFieldMode="SingleLine" Text="{keyboard_event[1]}" Version="V3" />'
                 )
         elif element[0] == "exclusiveGateway":
             xaml_elements.append("<If>")
@@ -124,11 +124,11 @@ def bpmn_to_xaml(elements):
             elements.remove(next_task)
             for click_event in click_events:
                 xaml_elements.append(
-                    f'<oa:ClickElement KeyModifiers="{{x:Null}}" AnimateMouse="False" Button="1" DoubleClick="False" Element="[item]" Focus="False" OffsetX="{click_event[1]}" OffsetY="{click_event[2]}" PostWait="00:00:00" VirtualClick="True" />'
+                    f'<uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click" KeyModifiers="None" MouseButton="Left" Version="V3" />'
                 )
             for keyboard_event in keyboard_events:
                 xaml_elements.append(
-                    f'<oa:TypeText ClickDelay="{{x:Null}}" Text="{keyboard_event[1]}" />'
+                    f'<uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into" EmptyFieldMode="SingleLine" Text="{keyboard_event[1]}" Version="V3" />'
                 )
             xaml_elements.append("</Sequence>")
             xaml_elements.append("</If.Then>")
@@ -143,11 +143,11 @@ def bpmn_to_xaml(elements):
             elements.remove(next_task)
             for click_event in click_events:
                 xaml_elements.append(
-                    f'<oa:ClickElement KeyModifiers="{{x:Null}}" AnimateMouse="False" Button="1" DoubleClick="False" Element="[item]" Focus="False" OffsetX="{click_event[1]}" OffsetY="{click_event[2]}" PostWait="00:00:00" VirtualClick="True" />'
+                    f'<uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click" KeyModifiers="None" MouseButton="Left" Version="V3" />'
                 )
             for keyboard_event in keyboard_events:
                 xaml_elements.append(
-                    f'<oa:TypeText ClickDelay="{{x:Null}}" Text="{keyboard_event[1]}" />'
+                    f'<uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into" EmptyFieldMode="SingleLine" Text="{keyboard_event[1]}" Version="V3" />'
                 )
             xaml_elements.append("</Sequence>")
             xaml_elements.append("</If.Else>")
@@ -155,7 +155,6 @@ def bpmn_to_xaml(elements):
         elif element[0] == "endEvent":
             continue
     result = "<Sequence>\n" + "\n".join(xaml_elements) + "\n</Sequence>"
-    print(result)
     return result
 
 
@@ -194,7 +193,7 @@ template_file = "out_template.xaml"
 output_file = "output/output.xaml"
 
 bpmn_elements = parse_bpmn(bpmn_file)
-xaml_content = bpmn_to_xaml(bpmn_elements)
+xaml_content = bpmn_to_xaml_uipath(bpmn_elements)
 final_output = insert_xaml_into_template(template_file, xaml_content)
 pretty_final_output = prettify_xml(final_output)
 
