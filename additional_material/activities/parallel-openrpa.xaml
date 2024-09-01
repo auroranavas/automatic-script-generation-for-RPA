@@ -1,0 +1,9 @@
+<Parallel>
+  <Sequence>
+	<oa:TypeText ClickDelay="{x:Null}" Text="Hello world" />
+	<ou:ReadPDF AllText="{x:Null}" Password="{x:Null}" Result="{x:Null}" Filename="[&quot;%USERPROFILE%\Downloads\978-3-031-59468-7_7.pdf&quot;]" />
+  </Sequence>
+  <Sequence>
+	<ou:ReadPDF AllText="{x:Null}" Password="{x:Null}" Result="{x:Null}" Filename="[&quot;%USERPROFILE%\Downloads\04-gestion-construccion.pdf&quot;]" />
+  </Sequence>
+</Parallel>

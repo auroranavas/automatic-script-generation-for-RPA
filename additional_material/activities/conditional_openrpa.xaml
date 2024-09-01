@@ -1,0 +1,8 @@
+<If Condition="[DateTime.Now &gt; DateTime.Today.AddHours(17)]">
+    <If.Then>
+        <ou:ReadPDF AllText="{x:Null}" Password="{x:Null}" Result="{x:Null}" Filename="[&quot;%USERPROFILE%\Downloads\Agreement.pdf&quot;]" />
+    </If.Then>
+    <If.Else>
+        <ou:ReadPDF AllText="{x:Null}" Password="{x:Null}" Result="{x:Null}" Filename="[&quot;%USERPROFILE%\Downloads\Contribution_to_an_equipped_approach_for_the_desig.pdf&quot;]" />
+    </If.Else>
+</If>

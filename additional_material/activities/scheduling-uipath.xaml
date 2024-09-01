@@ -1,0 +1,8 @@
+<ui:TimeTrigger DailyRepeat="{x:Null}" DailyStartingTime="{x:Null}" DaysOfMonthToRunOn="{x:Null}" Result="{x:Null}" TimeZone="{x:Null}" WeeklyDaysToRunOn="{x:Null}" WeeklyStartingTime="{x:Null}" CronExpression="0 33 12 ? */1 3,5 *" DisplayName="Time Trigger" Frequency="Monthly" HourlyRepeat="2" HourlyStartingMinutes="20" MinuteByMinuteRepeat="2" MonthDaySelection="DayOfWeek" MonthlyRepeat="1" MonthlyStartingTime="2024-06-18T12:33">
+  <ui:TimeTrigger.MonthlyDaysToRunOn>
+	<scg:List x:TypeArguments="s:DayOfWeek" Capacity="2">
+	  <s:DayOfWeek>Tuesday</s:DayOfWeek>
+	  <s:DayOfWeek>Thursday</s:DayOfWeek>
+	</scg:List>
+  </ui:TimeTrigger.MonthlyDaysToRunOn>
+</ui:TimeTrigger>
