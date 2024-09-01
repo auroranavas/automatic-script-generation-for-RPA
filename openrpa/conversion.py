@@ -188,7 +188,7 @@ def prettify_xml(xml_string):
 
 
 # Example usage
-bpmn_file = "bpmn_ejemplo/bpmn.bpmn"
+bpmn_file = "monitoring_results.bpmn"
 template_file = "out_template.xaml"
 output_file = "output/output.xaml"
 
