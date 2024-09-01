@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
+import os
 
 
 def parse_bpmn(file_path):
@@ -196,6 +197,11 @@ bpmn_elements = parse_bpmn(bpmn_file)
 xaml_content = bpmn_to_xaml_openrpa(bpmn_elements)
 final_output = insert_xaml_into_template(template_file, xaml_content)
 pretty_final_output = prettify_xml(final_output)
+
+# Ensure the output directory exists
+output_dir = os.path.dirname(output_file)
+os.makedirs(output_dir, exist_ok=True)
+
 
 with open(output_file, "w") as file:
     file.write(pretty_final_output)
