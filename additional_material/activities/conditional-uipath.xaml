@@ -1,0 +1,12 @@
+<If Condition="[DateTime.Now &gt; DateTime.Today.AddHours(17)]">
+    <If.Then>
+    <Sequence>
+        ...    
+    </Sequence>
+    </If.Then>
+    <If.Else>
+    <Sequence>
+        ...    
+    </Sequence>
+    </If.Else>
+</If>

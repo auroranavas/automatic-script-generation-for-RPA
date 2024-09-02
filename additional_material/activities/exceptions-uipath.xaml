@@ -1,0 +1,12 @@
+<ui:TimeoutScope TimeoutMessage="{x:Null}" DisplayName="Timeout Scope" ThrowExceptionAfter="00:00:02">
+  <ui:TimeoutScope.Body>
+	<ActivityAction x:TypeArguments="Activity">
+	  <Sequence DisplayName="Do">
+		  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+			<x:Boolean x:Key="IsExpanded">True</x:Boolean>
+		  </scg:Dictionary>
+		<ui:LogMessage Message="[&quot;Hello world&quot;]" />
+	  </Sequence>
+	</ActivityAction>
+  </ui:TimeoutScope.Body>
+</ui:TimeoutScope>

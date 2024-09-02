@@ -1,0 +1,13 @@
+<ui:InterruptibleWhile CurrentIndex="{x:Null}" DisplayName="While">
+  <ui:InterruptibleWhile.Body>
+	<Sequence>
+		<scg:Dictionary x:TypeArguments="x:String, x:Object">
+		  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+		</scg:Dictionary>
+	  <ui:LogMessage Message="[&quot;Hello world&quot;]" />
+	</Sequence>
+  </ui:InterruptibleWhile.Body>
+  <ui:InterruptibleWhile.Condition>
+	<VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="DateTime.Now &gt; DateTime.Today.AddHours(17)" />
+  </ui:InterruptibleWhile.Condition>
+</ui:InterruptibleWhile>

@@ -1,0 +1,6 @@
+<oa:BreakableWhile Condition="[DateTime.Now &gt; DateTime.Today.AddHours(17)]">
+  <oa:BreakableWhile.Variables>
+	<sco:Collection x:TypeArguments="Variable" />
+  </oa:BreakableWhile.Variables>
+  <ou:ReadPDF AllText="{x:Null}" Password="{x:Null}" Result="{x:Null}" Filename="[&quot;%USERPROFILE%\Downloads\04-gestion-construccion.pdf&quot;]"/>
+</oa:BreakableWhile>

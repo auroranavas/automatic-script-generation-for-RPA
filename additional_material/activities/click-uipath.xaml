@@ -1,0 +1,5 @@
+<uix:NClick ActivateBefore="True" ClickType="Single" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="92cb7f4f-60da-490a-b8ad-d10a8aab918f" Version="V3">
+    <uix:NClick.Target>
+        <uix:TargetAnchorable BrowserURL="https://www.informatica.us.es/" CvTextArea="1039, 890, 227, 31" CvTextArgument="Organizacion Docente" CvType="Text" DesignTimeRectangle="1041, 883, 227, 39" DesignTimeScaleFactor="1.25" ElementType="Text" FriendlyName="'Organizacion Docente'" FullSelectorArgument="&lt;webctrl parentid='sppb-addon-1663751517191' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl parentid='sppb-addon-1663751517191' tag='A' type='' class='' aaname='Organizacion Docente' check:innerText='Organizacion Docente' /&gt;" Guid="6f59c9a8-7f72-4a3c-86a0-4a9fba697012" InformativeScreenshot="ab1f8ca9957b709c62f30c39ffbe1e9d.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Inicio' /&gt;" SearchSteps="Selector" Version="V2" Visibility="Interactive" />
+    </uix:NClick.Target>
+</uix:NClick>

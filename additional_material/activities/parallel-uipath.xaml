@@ -1,0 +1,15 @@
+<Parallel>
+  <Sequence>
+	  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+		<x:Boolean x:Key="IsExpanded">True</x:Boolean>
+	  </scg:Dictionary>
+	<ui:LogMessage Message="[&quot;Hello world&quot;]" />
+  </Sequence>
+  <Sequence>
+	  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+		<x:Boolean x:Key="IsExpanded">True</x:Boolean>
+	  </scg:Dictionary>
+	<ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="First Letter Message Box" Text="[FullName.Substring(0,1).ToString]" />
+	<Delay Duration="03:00:00"/>
+  </Sequence>
+</Parallel>

@@ -1,0 +1,5 @@
+<uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" EmptyFieldMode="SingleLine" ScopeIdentifier="92cb7f4f-60da-490a-b8ad-d10a8aab918f" Text="etsii" Version="V3">
+    <uix:NTypeInto.Target>
+        <uix:TargetAnchorable BrowserURL="https://www.us.es/buscar-en-la-us?keys=" CvElementArea="246, 603, 1415, 51" CvType="InputBox" DesignTimeRectangle="246, 606, 1416, 45" DesignTimeScaleFactor="1.25" ElementType="InputBox" FriendlyName="'etsii'" FullSelectorArgument="&lt;webctrl tag='INPUT' type='text' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='INPUT' type='text' class='form-text' aaname='' /&gt;" Guid="8aa14e19-fcdd-49c3-a271-18beccd0414a" InformativeScreenshot="14f72a367a1c6286d676a05b7c7fb7d4.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Buscar en la US | Universidad de Sevilla' /&gt;" SearchSteps="Selector" Version="V2" Visibility="Interactive" />
+    </uix:NTypeInto.Target>
+</uix:NTypeInto>
