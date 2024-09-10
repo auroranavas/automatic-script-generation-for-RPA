@@ -165,9 +165,6 @@ def bpmn_to_xaml_openrpa(elements):
 
 
 def insert_xaml_into_template(template_path, xaml_content):
-    """
-    Metadata that OpenRPA needs to compile the automation
-    """
     with open(template_path, "r") as file:
         template = file.read()
 
@@ -186,9 +183,6 @@ def insert_xaml_into_template(template_path, xaml_content):
 
 
 def prettify_xml(xml_string):
-    """
-    Make XML easier to read by adding indentation
-    """
     parsed_xml = minidom.parseString(xml_string)
     return parsed_xml.toprettyxml(indent="  ")
 
@@ -200,13 +194,13 @@ output_file = "output/executable_process.xaml"
 
 bpmn_elements = parse_monitoring_result(bpmn_file)
 xaml_content = bpmn_to_xaml_openrpa(bpmn_elements)
-# final_output = insert_xaml_into_template(template_file, xaml_content)
-# pretty_final_output = prettify_xml(final_output)
+final_output = insert_xaml_into_template(template_file, xaml_content)
+pretty_final_output = prettify_xml(final_output)
 
 # Ensure the output directory exists
-# output_dir = os.path.dirname(output_file)
-# os.makedirs(output_dir, exist_ok=True)
+output_dir = os.path.dirname(output_file)
+os.makedirs(output_dir, exist_ok=True)
 
 
-# with open(output_file, "w") as file:
-#     file.write(pretty_final_output)
+with open(output_file, "w") as file:
+    file.write(pretty_final_output)

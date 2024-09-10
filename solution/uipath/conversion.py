@@ -81,7 +81,7 @@ def parse_monitoring_result(file_path):
     return elements
 
 
-def bpmn_to_xaml_uipath(elements):
+def bpmn_elements_to_xaml_uipath(elements):
     """
     Input: elements (list) - List of tuples with the following format:
     [('startEvent', 'id3f98fcb5-a92a-4607-8b78-5d74a485c646', 'start', ['id46d0112d-abc2-41df-928b-5a5495c09d18']),
@@ -164,9 +164,6 @@ def bpmn_to_xaml_uipath(elements):
 
 
 def insert_xaml_into_template(template_path, xaml_content):
-    """
-    Metadata that OpenRPA needs to compile the automation
-    """
     with open(template_path, "r") as file:
         template = file.read()
 
@@ -185,9 +182,6 @@ def insert_xaml_into_template(template_path, xaml_content):
 
 
 def prettify_xml(xml_string):
-    """
-    Make XML easier to read by adding indentation
-    """
     parsed_xml = minidom.parseString(xml_string)
     return parsed_xml.toprettyxml(indent="  ")
 
@@ -198,7 +192,7 @@ template_file = "out_template.xaml"
 output_file = "output/executable_process.xaml"
 
 bpmn_elements = parse_monitoring_result(bpmn_file)
-xaml_content = bpmn_to_xaml_uipath(bpmn_elements)
+xaml_content = bpmn_elements_to_xaml_uipath(bpmn_elements)
 final_output = insert_xaml_into_template(template_file, xaml_content)
 pretty_final_output = prettify_xml(final_output)
 
