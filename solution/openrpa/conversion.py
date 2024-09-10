@@ -189,7 +189,7 @@ def prettify_xml(xml_string):
 
 # Example usage
 bpmn_file = "monitoring_results.bpmn"
-template_file = "out_template.xaml"
+template_file = "openrpa_template.xaml"
 output_file = "output/executable_process.xaml"
 
 bpmn_elements = parse_monitoring_result(bpmn_file)
