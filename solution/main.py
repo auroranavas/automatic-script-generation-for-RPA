@@ -41,49 +41,50 @@ class InputScreen(tk.Frame):
         self.controller = controller
 
         content_frame = tk.Frame(self)
-        content_frame.pack(expand=True, pady=20)
+        content_frame.grid(row=0, column=0, padx=20, pady=20, sticky="w")
 
         # Input File Selection
         self.input_file_path = tk.StringVar()
 
         label = tk.Label(content_frame, text="Select Input File:")
-        label.pack(side="left", padx=10)
+        label.grid(row=0, column=0, padx=10, pady=5, sticky="w")
 
         self.input_file_button = tk.Button(
             content_frame, text="Browse", command=self.browse_input_file
         )
-        self.input_file_button.pack(side="left", padx=10)
+        self.input_file_button.grid(row=0, column=1, padx=10, pady=5, sticky="w")
 
         self.input_file_entry = tk.Entry(
-            content_frame, textvariable=self.input_file_path, width=50
+            content_frame, textvariable=self.input_file_path, width=40
         )
-        self.input_file_entry.pack(side="left", padx=10)
+        self.input_file_entry.grid(row=0, column=2, padx=10, pady=5, sticky="w")
 
         platform_frame = tk.Frame(self)
-        platform_frame.pack(expand=True, pady=20)
+        platform_frame.grid(row=1, column=0, padx=20, pady=20, sticky="w")
 
         # RPA Platform Selection
         label_platform = tk.Label(platform_frame, text="Select RPA Platform:")
-        label_platform.pack(side="left", padx=10)
+        label_platform.grid(row=0, column=0, padx=10, pady=5, sticky="w")
 
-        self.rpa_platform = tk.StringVar(value="uipath")
-        self.platform_choice_uipath = tk.Radiobutton(
-            platform_frame, text="UiPath", variable=self.rpa_platform, value="uipath"
+        self.rpa_platform = tk.StringVar(value="UiPath")
+        self.platform_choices = ["UiPath", "OpenRPA"]
+        self.platform_dropdown = ttk.Combobox(
+            platform_frame,
+            textvariable=self.rpa_platform,
+            values=self.platform_choices,
+            state="readonly",
         )
-        self.platform_choice_openrpa = tk.Radiobutton(
-            platform_frame, text="OpenRPA", variable=self.rpa_platform, value="openrpa"
-        )
-        self.platform_choice_uipath.pack(side="left", padx=10)
-        self.platform_choice_openrpa.pack(side="left", padx=10)
+        self.platform_dropdown.grid(row=0, column=1, padx=10, pady=5, sticky="w")
+        self.platform_dropdown.current(0)
 
         # Generate Button
         button_frame = tk.Frame(self)
-        button_frame.pack(expand=True, pady=20)
+        button_frame.grid(row=2, column=0, padx=20, pady=20)
 
         self.generate_button = tk.Button(
             button_frame, text="Generate", command=self.start_generation
         )
-        self.generate_button.pack()
+        self.generate_button.grid(row=0, column=0, padx=10, pady=5)
 
     def browse_input_file(self):
         file_path = filedialog.askopenfilename(title="Select input file")
@@ -146,12 +147,27 @@ class GenerationScreen(tk.Frame):
             file_directory, f"executable_process_{platform}{file_ext}"
         )  # CAMBIAR POR OUTPUT FILE DE LA FUNCION
 
-        # Save the converted file in the controller and simulate the conversion
-        self.controller.converted_file = output_file
-        convert_file(input_file, output_file)
+        if platform == "UiPath":
+            self.convert_file_uipath(input_file, output_file)
+        elif platform == "OpenRPA":
+            self.convert_file_openrpa(input_file, output_file)
 
         # After conversion is complete, move to the download screen
         self.controller.show_frame(DownloadScreen)
+
+    def convert_file_uipath(self, input_file, output_file):
+        # Simulated conversion function for UiPath
+        # Here you can call a real function for UiPath conversion
+        print(f"Converting {input_file} to UiPath format...")
+        with open(output_file, "w") as f:
+            f.write(f"Converted {input_file} to UiPath executable process")
+
+    def convert_file_openrpa(self, input_file, output_file):
+        # Simulated conversion function for OpenRPA
+        # Here you can call a real function for OpenRPA conversion
+        print(f"Converting {input_file} to OpenRPA format...")
+        with open(output_file, "w") as f:
+            f.write(f"Converted {input_file} to OpenRPA executable process")
 
 
 class DownloadScreen(tk.Frame):
