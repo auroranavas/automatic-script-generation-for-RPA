@@ -181,25 +181,12 @@ def insert_xaml_into_uipath_template(template_path, xaml_content):
     return new_content
 
 
-def format_xml(xml_string):
+def generate_executable_process(
+    xml_string, output_file="output/executable_process.xaml"
+):
     parsed_xml = minidom.parseString(xml_string)
-    return parsed_xml.toprettyxml(indent="  ")
-
-
-# Example usage
-bpmn_file = "monitoring_results.bpmn"
-template_file = "uipath_template.xaml"
-output_file = "output/executable_process.xaml"
-
-bpmn_elements = parse_monitoring_result(bpmn_file)
-xaml_content = bpmn_elements_to_xaml_uipath(bpmn_elements)
-final_output = insert_xaml_into_uipath_template(template_file, xaml_content)
-formatted_final_output = format_xml(final_output)
-
-
-# Ensure the output directory exists
-output_dir = os.path.dirname(output_file)
-os.makedirs(output_dir, exist_ok=True)
-
-with open(output_file, "w") as file:
-    file.write(formatted_final_output)
+    indented_xml = parsed_xml.toprettyxml(indent="  ")
+    output_dir = os.path.dirname(output_file)
+    os.makedirs(output_dir, exist_ok=True)
+    with open(output_file, "w") as file:
+        file.write(indented_xml)
