@@ -189,3 +189,11 @@ def generate_executable_process(
     os.makedirs(output_dir, exist_ok=True)
     with open(output_file, "w") as file:
         file.write(indented_xml)
+
+
+def convert_bpmn_to_openrpa_xaml(monitoring_results, executable_process):
+    elements = parse_monitoring_result(monitoring_results)
+    xaml_content = bpmn_to_xaml_openrpa(elements)
+    template_path = "solution/openrpa/openrpa_template.xaml"
+    new_content = insert_xaml_into_openrpa_template(template_path, xaml_content)
+    generate_executable_process(new_content, executable_process)

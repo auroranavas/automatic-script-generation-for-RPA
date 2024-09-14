@@ -1,12 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
-import os
-from openrpa.conversion import (
-    parse_monitoring_result,
-    bpmn_to_xaml_openrpa,
-    insert_xaml_into_openrpa_template,
-    generate_executable_process,
-)
+from uipath.conversion import convert_bpmn_to_uipath_xaml
+from openrpa.conversion import convert_bpmn_to_openrpa_xaml
 
 
 class ScriptGenerationApp(tk.Tk):
@@ -15,19 +10,16 @@ class ScriptGenerationApp(tk.Tk):
         self.title("Automatic script generation for RPA")
         self.geometry("500x300")
 
-        # Container for frames
         self.container = tk.Frame(self)
         self.container.pack(fill="both", expand=True)
 
         self.frames = {}
 
-        # Initialize all three screens
         for F in (InputScreen, GenerationScreen, DownloadScreen):
             frame = F(self.container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
-        # Start on InputScreen
         self.show_frame(InputScreen)
 
     def show_frame(self, cont):
@@ -43,7 +35,6 @@ class InputScreen(tk.Frame):
         content_frame = tk.Frame(self)
         content_frame.grid(row=0, column=0, padx=20, pady=20, sticky="w")
 
-        # Input File Selection
         self.input_file_path = tk.StringVar()
 
         label = tk.Label(content_frame, text="Select Input File:")
@@ -62,7 +53,6 @@ class InputScreen(tk.Frame):
         platform_frame = tk.Frame(self)
         platform_frame.grid(row=1, column=0, padx=20, pady=20, sticky="w")
 
-        # RPA Platform Selection
         label_platform = tk.Label(platform_frame, text="Select RPA Platform:")
         label_platform.grid(row=0, column=0, padx=10, pady=5, sticky="w")
 
@@ -77,7 +67,6 @@ class InputScreen(tk.Frame):
         self.platform_dropdown.grid(row=0, column=1, padx=10, pady=5, sticky="w")
         self.platform_dropdown.current(0)
 
-        # Generate Button
         button_frame = tk.Frame(self)
         button_frame.grid(row=2, column=0, padx=20, pady=20)
 
@@ -99,11 +88,9 @@ class InputScreen(tk.Frame):
             messagebox.showerror("Error", "Please select an input file.")
             return
 
-        # Save the input file and platform in the controller
         self.controller.input_file = input_file
         self.controller.platform = platform
 
-        # Show the generation screen
         self.controller.show_frame(GenerationScreen)
         self.controller.frames[GenerationScreen].start_progress()
 
@@ -116,7 +103,6 @@ class GenerationScreen(tk.Frame):
         label = tk.Label(self, text="Generating...")
         label.pack(pady=10)
 
-        # Progress Bar
         self.progress = ttk.Progressbar(
             self, orient="horizontal", length=300, mode="determinate"
         )
@@ -130,44 +116,13 @@ class GenerationScreen(tk.Frame):
 
     def update_progress(self):
         if self.progress["value"] < self.max_value:
-            self.progress["value"] += 10  # Increment progress
-            self.after(500, self.update_progress)  # Simulate time delay
+            self.progress["value"] += 20
+            self.after(200, self.update_progress)
         else:
             self.complete_generation()
 
     def complete_generation(self):
-        # Simulate file conversion based on input file and RPA platform
-        input_file = self.controller.input_file
-        platform = self.controller.platform
-
-        # Automatically generate output file path
-        file_directory = os.path.dirname(input_file)
-        file_name, file_ext = os.path.splitext(os.path.basename(input_file))
-        output_file = os.path.join(
-            file_directory, f"executable_process_{platform}{file_ext}"
-        )  # CAMBIAR POR OUTPUT FILE DE LA FUNCION
-
-        if platform == "UiPath":
-            self.convert_file_uipath(input_file, output_file)
-        elif platform == "OpenRPA":
-            self.convert_file_openrpa(input_file, output_file)
-
-        # After conversion is complete, move to the download screen
         self.controller.show_frame(DownloadScreen)
-
-    def convert_file_uipath(self, input_file, output_file):
-        # Simulated conversion function for UiPath
-        # Here you can call a real function for UiPath conversion
-        print(f"Converting {input_file} to UiPath format...")
-        with open(output_file, "w") as f:
-            f.write(f"Converted {input_file} to UiPath executable process")
-
-    def convert_file_openrpa(self, input_file, output_file):
-        # Simulated conversion function for OpenRPA
-        # Here you can call a real function for OpenRPA conversion
-        print(f"Converting {input_file} to OpenRPA format...")
-        with open(output_file, "w") as f:
-            f.write(f"Converted {input_file} to OpenRPA executable process")
 
 
 class DownloadScreen(tk.Frame):
@@ -183,18 +138,42 @@ class DownloadScreen(tk.Frame):
         )
         self.download_button.pack(pady=20)
 
+        self.back_button = tk.Button(
+            self, text="Back to Start", command=self.go_back_to_start
+        )
+        self.back_button.pack(pady=10)
+
     def save_file(self):
-        # Let the user choose where to save the converted file
         output_path = filedialog.asksaveasfilename(
             title="Save converted file as", defaultextension=".xaml"
         )
         if output_path:
             try:
-                # Move the converted file to the selected location
-                os.rename(self.controller.converted_file, output_path)
+                input_file = self.controller.input_file
+                platform = self.controller.platform
+
+                if platform == "UiPath":
+                    self.convert_file_uipath(input_file, output_path)
+                elif platform == "OpenRPA":
+                    self.convert_file_openrpa(input_file, output_path)
+
                 messagebox.showinfo("Success", f"File saved at {output_path}")
             except Exception as e:
                 messagebox.showerror("Error", f"Could not save the file: {e}")
+
+    def go_back_to_start(self):
+        self.controller.input_file = None
+        self.controller.platform = None
+        self.controller.frames[InputScreen].input_file_path.set("")
+        self.controller.show_frame(InputScreen)
+
+    def convert_file_uipath(self, input_file, output_file):
+        print(f"Converting {input_file} to UiPath format...")
+        convert_bpmn_to_uipath_xaml(input_file, output_file)
+
+    def convert_file_openrpa(self, input_file, output_file):
+        print(f"Converting {input_file} to OpenRPA format...")
+        convert_bpmn_to_openrpa_xaml(input_file, output_file)
 
 
 if __name__ == "__main__":
