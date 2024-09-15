@@ -81,7 +81,7 @@ def parse_monitoring_result(file_path):
     return elements
 
 
-def bpmn_to_xaml_openrpa(elements):
+def bpmn_elements_to_xaml_openrpa(elements):
     """
     Input: elements (list) - List of tuples with the following format:
     [('startEvent', 'id3f98fcb5-a92a-4607-8b78-5d74a485c646', 'start', ['id46d0112d-abc2-41df-928b-5a5495c09d18']),
@@ -193,7 +193,7 @@ def generate_executable_process(
 
 def convert_bpmn_to_openrpa_xaml(monitoring_results, executable_process):
     elements = parse_monitoring_result(monitoring_results)
-    xaml_content = bpmn_to_xaml_openrpa(elements)
+    xaml_content = bpmn_elements_to_xaml_openrpa(elements)
     template_path = "solution/openrpa/openrpa_template.xaml"
     new_content = insert_xaml_into_openrpa_template(template_path, xaml_content)
     generate_executable_process(new_content, executable_process)
