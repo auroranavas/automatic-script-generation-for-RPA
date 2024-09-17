@@ -81,7 +81,7 @@ def parse_monitoring_result(file_path):
     return elements
 
 
-def bpmn_to_xaml_uipath(elements):
+def bpmn_elements_to_xaml_uipath(elements):
     """
     Input: elements (list) - List of tuples with the following format:
     [('startEvent', 'id3f98fcb5-a92a-4607-8b78-5d74a485c646', 'start', ['id46d0112d-abc2-41df-928b-5a5495c09d18']),
@@ -163,10 +163,7 @@ def bpmn_to_xaml_uipath(elements):
     return result
 
 
-def insert_xaml_into_template(template_path, xaml_content):
-    """
-    Metadata that OpenRPA needs to compile the automation
-    """
+def insert_xaml_into_uipath_template(template_path, xaml_content):
     with open(template_path, "r") as file:
         template = file.read()
 
@@ -184,28 +181,20 @@ def insert_xaml_into_template(template_path, xaml_content):
     return new_content
 
 
-def prettify_xml(xml_string):
-    """
-    Make XML easier to read by adding indentation
-    """
+def generate_executable_process(
+    xml_string, output_file="output/executable_process.xaml"
+):
     parsed_xml = minidom.parseString(xml_string)
-    return parsed_xml.toprettyxml(indent="  ")
+    indented_xml = parsed_xml.toprettyxml(indent="  ")
+    output_dir = os.path.dirname(output_file)
+    os.makedirs(output_dir, exist_ok=True)
+    with open(output_file, "w") as file:
+        file.write(indented_xml)
 
 
-# Example usage
-bpmn_file = "monitoring_results.bpmn"
-template_file = "out_template.xaml"
-output_file = "output/executable_process.xaml"
-
-bpmn_elements = parse_monitoring_result(bpmn_file)
-xaml_content = bpmn_to_xaml_uipath(bpmn_elements)
-final_output = insert_xaml_into_template(template_file, xaml_content)
-pretty_final_output = prettify_xml(final_output)
-
-
-# Ensure the output directory exists
-output_dir = os.path.dirname(output_file)
-os.makedirs(output_dir, exist_ok=True)
-
-with open(output_file, "w") as file:
-    file.write(pretty_final_output)
+def convert_bpmn_to_uipath_xaml(monitoring_results, executable_process):
+    elements = parse_monitoring_result(monitoring_results)
+    xaml_content = bpmn_elements_to_xaml_uipath(elements)
+    template_path = "solution/uipath/uipath_template.xaml"
+    new_content = insert_xaml_into_uipath_template(template_path, xaml_content)
+    generate_executable_process(new_content, executable_process)
