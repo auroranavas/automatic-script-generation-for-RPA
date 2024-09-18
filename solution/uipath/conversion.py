@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
 import os
+import sys
 
 
 def parse_monitoring_result(file_path):
@@ -192,9 +193,17 @@ def generate_executable_process(
         file.write(indented_xml)
 
 
+def get_resource_path(relative_path):
+    if hasattr(sys, "_MEIPASS"):
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
+
 def convert_bpmn_to_uipath_xaml(monitoring_results, executable_process):
     elements = parse_monitoring_result(monitoring_results)
     xaml_content = bpmn_elements_to_xaml_uipath(elements)
-    template_path = "solution/uipath/uipath_template.xaml"
+    template_path = get_resource_path("uipath/uipath_template.xaml")
     new_content = insert_xaml_into_uipath_template(template_path, xaml_content)
     generate_executable_process(new_content, executable_process)
