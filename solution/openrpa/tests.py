@@ -14,7 +14,6 @@ from conversion import (
 
 class TestConversion(unittest.TestCase):
     def setUp(self):
-        # Create a sample BPMN XML structure for testing
         self.bpmn_xml = Element("definitions")
         process = SubElement(self.bpmn_xml, "process")
 
@@ -86,7 +85,6 @@ class TestConversion(unittest.TestCase):
         SubElement(end_event, "incoming").text = "flow5"
         SubElement(end_event, "incoming").text = "flow6"
 
-        # Convert the XML to string
         self.bpmn_xml_str = tostring(self.bpmn_xml, encoding="unicode")
 
     def test_parse_monitoring_result(self):
