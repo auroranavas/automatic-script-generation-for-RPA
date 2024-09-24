@@ -76,7 +76,7 @@ def parse_monitoring_result(file_path):
                     "endEvent",
                     child.attrib["id"],
                     child.attrib["name"],
-                    child.find("{*}incoming").text,
+                    [incoming.text for incoming in child.findall("{*}incoming")],
                 )
             )
     return elements
