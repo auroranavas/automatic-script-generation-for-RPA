@@ -76,7 +76,9 @@ class InputScreen(tk.Frame):
         self.generate_button.grid(row=0, column=0, padx=10, pady=5)
 
     def browse_input_file(self):
-        file_path = filedialog.askopenfilename(title="Select input file")
+        file_path = filedialog.askopenfilename(
+            title="Select input file", filetypes=[("BPMN files", "*.bpmn")]
+        )
         if file_path:
             self.input_file_path.set(file_path)
 
